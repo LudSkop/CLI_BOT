@@ -49,14 +49,38 @@ class Birthday(Field):
 
 class Record:
 
-    def __init__(self, name, phone, email, birthday ):
+    def __init__(self, name, phone, email, birthday):
         self.name = Name(name)
-        self.phone = Phone(phone)
+        self.phones = []
+        self.phones.append(Phone(phone))
         self.email = Email(email)
         self.birthday = Birthday(birthday)
 
     def __str__(self):
-        return f"{Fore.MAGENTA}Name: {self.name}\n{Fore.RED}Phone: {self.phone}\n{Fore.CYAN}Email: {self.email}\n{Fore.YELLOW}Birthday: {self.birthday}{Fore.RESET}"
+        return f"{Fore.MAGENTA}Name: {self.name}\n{Fore.RED}Phone: {[phone.value for phone in self.phones]}\n{Fore.CYAN}Email: {self.email}\n{Fore.YELLOW}Birthday: {self.birthday}{Fore.RESET}"
+
+    def add_phone(self, number_phone):
+        new_phone = Phone(number_phone)
+        self.phones.append(new_phone)
+
+    def remove_phone(self, phone_v):
+        for phone in self.phones:
+            if phone.value == phone_v:
+                self.phones.remove(phone)
+
+    def edit_phone(self, new_phone, old_phone):
+        for el in self.phones:
+            if el.value == old_phone:
+                self.phones.remove(el)
+                new_phone = Phone(new_phone)
+                self.phones.append(new_phone)
+
+
+    def find_phone(self, phone):
+        for el in self.phones:
+            if el.value == phone:
+                return el
+
 
 
 class AddressBook(UserList):
@@ -90,39 +114,18 @@ class AddressBook(UserList):
 
 
 if __name__ == '__main__':
-    phone = Phone('0963610573')
-    print(Fore.RED + phone.value)
-    name = Name('Luda')
-    print(Fore.MAGENTA + name.value)
-    email = Email('luda80@gmail.com')
-    print(Fore.CYAN + email.value)
-    birthday = Birthday('1980-05-16')
-    print(birthday.value)
-    contact = Record('Vlad любимий син', '0631934048', 'vlad2000@gmail.com', '2000-01-28')
-    print(contact)
-    contact1 = Record('Luda','0963610573', 'luda80@gmail.com', '1980-05-16')
-    print(contact1)
-    contact1.name = 'Alissa'
-    print(contact1)
-    address_book = AddressBook()
-    address_book.add_record(contact)
-    address_book.add_record(contact1)
-    print('All contacts :')
-    for contact in address_book:
-        print(contact)
+    record_vlad = Record('Vlad', '0963610573', 'qwe@gmail.com', '2000-01-28')
+    record_vlad.remove_phone('0963610573')
+    record_vlad.add_phone('0963234404')
+    record_vlad.edit_phone('1234567890','0963234404')
+    record_vlad.add_phone("1231231231")
+    record_vlad.add_phone('9876543210')
+    record_vlad.remove_phone('1231231231')
+    print(record_vlad.find_phone('1234567890'))
+    print(record_vlad)
 
-        print("\nFind contact Vlad:")
-        print(address_book.find_record('Vlad'))
 
-        print("\nUpdate contact Vlad:")
-        address_book.update_record('Vlad', phone='0630000000')
-        print(address_book.find_record('Vlad'))
 
-        print("\nRemove contact Luda:")
-        address_book.remove_record('Luda')
-        print("All contacts:")
-        for record in address_book:
-            print(record)
 
 
 
