@@ -1,2 +1,2 @@
-# KLI_BOT
+# CLI_BOT
 # 
