@@ -5,6 +5,7 @@ data = {'Alisa': 7, 'Pusa': 4}
 
 with open('lesson.bin', 'wb') as file:
     pickle.dump(data, file)
+    
 
 
 d_bytes = pickle.dumps(data)
