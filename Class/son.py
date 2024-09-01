@@ -1,4 +1,4 @@
-import json
+import son
 
 
 def write_contacts_to_file(filename, contacts):
